@@ -15,7 +15,10 @@ public class Game
         Players[0].AddArmy(new Army(new Pos(0, 0), 10));
         Players[1].AddArmy(new Army(new Pos(1, 1), 10));
         CurrentPlayerIndex = 0;
+        Scorer = new Scorer(Players);
     }
+
+    private Scorer Scorer;
 
     public World World { get; private set; }
 
@@ -43,6 +46,12 @@ public class Game
         {
             player.Tick();
         }
+        Scorer.UpdateScores(World);
+    }
+
+    public int ScorePlayer(Player player)
+    {
+        return Scorer.GetScore(player);
     }
 
     public void Print()
