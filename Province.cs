@@ -83,16 +83,5 @@ public class Province
     public void Gather(Player player)
     {
         player.Resources.Add(this.activeResources);
-        player.GetArmyAt()
-    }
-
-    public void Render()
-    {
-        Color c = Owner?.Color ?? new Color(0.5f, 0.5f, 0.5f);
-
-        c.Use();
-        GL.Rect(0.0f, 0.0f, 1.0f, 1.0f);
-
-        City?.Render();
     }
 }

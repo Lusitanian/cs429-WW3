@@ -21,9 +21,10 @@ public class Window : GameWindow
 
     public void Render(Army army)
     {
+        var pos = game.Manager.ArmyPosition(army);
         GL.MatrixMode(MatrixMode.Modelview);
         GL.PushMatrix();
-        GL.Translate(army.Position.X, army.Position.Y, 0);
+        GL.Translate(pos.X, pos.Y, 0);
         GL.Begin(PrimitiveType.Triangles);
         GL.Vertex2(0.7f, 0.3f);
         GL.Vertex2(0.5f, 0.7f);
