@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 public class Game
 {
-    private Scorer scorer;
-
     private CombatResolver combat;
 
     public Game()
@@ -18,10 +16,12 @@ public class Game
         Players[0].AddArmy(new Army(10), new Pos(0, 0));
         Players[1].AddArmy(new Army(10), new Pos(1, 1));
         CurrentPlayerIndex = 0;
-        scorer = new Scorer(Players);
+        Scorer = new Scorer(Players);
     }
 
     public World World { get; private set; }
+
+    public Scorer Scorer { get; private set; }
 
     public List<Player> Players { get; private set; }
 
@@ -52,7 +52,7 @@ public class Game
         }
 
         combat.Engage(CurrentPlayer, Players);
-        scorer.UpdateScores(World);
+        Scorer.UpdateScores(World);
     }
 
     public void EndTurn()
@@ -63,6 +63,6 @@ public class Game
 
     public int ScorePlayer(Player player)
     {
-        return scorer.GetScore(player);
+        return Scorer.GetScore(player);
     }
 }

@@ -147,7 +147,7 @@ public class Window : GameWindow
         {
             playerID = game.CurrentPlayerIndex;
             pos = new Pos(x, y);
-            army = player.GetArmyAt(pos);
+            army = game.Manager.GetArmyAt(pos);
             if (army != null)
             {
                 Console.WriteLine("Army clicked.");
@@ -161,7 +161,7 @@ public class Window : GameWindow
         else if (clickFlag == 1)
         {
             pos = new Pos(x, y);
-            if (army.CanMoveTo(pos) == true)
+            if (game.Manager.CanMoveTo(army, pos) == true)
             {
                 Console.WriteLine("Press 'y' now to confirm move.");
                 clickFlag = 2;
@@ -177,7 +177,7 @@ public class Window : GameWindow
     {
         if (e.KeyChar == 'y' && clickFlag == 2)
         {
-            army.MoveTo(pos);
+            game.Manager.MoveArmy(army, pos);
             Console.WriteLine("Army has moved.");
             clickFlag = 0;
         }

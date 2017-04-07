@@ -16,6 +16,30 @@ public class ArmyManager
         return new List<Army>(committedPositions.Keys);
     }
 
+    public Army GetArmyAt(Pos pos)
+    {
+        Dictionary<Army, Pos> searchDict;
+
+        if (positions.ContainsValue(pos))
+        {
+            searchDict = positions;
+        }
+        else
+        {
+            searchDict = committedPositions;
+        }
+
+        foreach (var item in searchDict)
+        {
+            if (item.Value.Equals(pos))
+            {
+                return item.Key;
+            }
+        }
+
+        return null;
+    }
+
     public Pos ArmyPosition(Army army)
     {
         if (positions.ContainsKey(army))

@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 public class REPL
 {
-    private const string Commands = @"help|end|mv|quit|print|capture|feed|resources|undo|gather|make";
+    private const string Commands = @"help|end|mv|quit|print|capture|feed|resources|undo|gather|make|scoreboard";
     private static readonly Regex Command = new Regex(@"(" + Commands + @")");
     private static readonly Regex Move = new Regex(@"mv (\d+) (\d+),(\d+)");
     private static readonly Regex Capture = new Regex(@"capture (\d+)");
@@ -23,6 +23,7 @@ public class REPL
     public void HelpCommand()
     {
         Console.WriteLine("help => Prints this help message");
+        Console.WriteLine("scoreboard -> Displays the current score of the game");
         Console.WriteLine("end => Ends the current player's turn, advancing to the next player");
         Console.WriteLine("mv ArmyId TargetX,TargetY => Moves the army ArmyId owned by the player to TargetX,TargetY iff the move is legal");
         Console.WriteLine("capture ArmyId Changes territory under armyId's control to the current player");
@@ -30,6 +31,7 @@ public class REPL
         Console.WriteLine("feed id => Feeds an army from the player's food stockpile to heal it");
         Console.WriteLine("undo id => Moves an army back to its original position for the turn");
         Console.WriteLine("gather id => Actively gathers resources under an army (consuming its turn)");
+        Console.WriteLine("make x y => Creates an army at the given coordinates");
         Console.WriteLine("quit => exits the REPL and closes out the game");
     }
 
@@ -203,6 +205,14 @@ public class REPL
         Console.WriteLine(game.CurrentPlayer.ResourcesString());
     }
 
+    public void ScoreboardCommand()
+    {
+        for (int i = 0; i < game.Players.Count; i++)
+        {
+            Console.WriteLine("Player " + (i + 1) + ": " + game.ScorePlayer(game.Players[i]));
+        }
+    }
+
     public void FeedCommand(string input)
     {
         Player player = game.CurrentPlayer;
@@ -284,6 +294,10 @@ public class REPL
                 else if (match.Value == "make")
                 {
                     MakeCommand(input);
+                }
+                else if (match.Value == "scoreboard")
+                {
+                    ScoreboardCommand();
                 }
             }
             else
